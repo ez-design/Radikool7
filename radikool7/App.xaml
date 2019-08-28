@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:radikool7"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+         　
     </Application.Resources>
 </Application>
