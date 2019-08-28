@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "radikool7", "radikool7\radikool7.csproj", "{41644706-2FCA-4068-832C-B18DB0B1A1E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radikool7", "Radikool7\Radikool7.csproj", "{41644706-2FCA-4068-832C-B18DB0B1A1E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "radikool7.Test", "radikool7.Test\radikool7.Test.csproj", "{3569483A-787E-4B65-99AD-4887E7555A1E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radikool7.Test", "Radikool7.Test\Radikool7.Test.csproj", "{3569483A-787E-4B65-99AD-4887E7555A1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
