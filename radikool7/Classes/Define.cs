@@ -61,5 +61,41 @@ namespace Radikool7.Classes
             public const string TimeFreeM3U8 = "https://radiko.jp/v2/api/ts/playlist.m3u8?station_id=[CH]&ft=[FT]&to=[TO]";
 
         }
+
+        public static class Nhk
+        {
+            /// <summary>
+            /// 種別
+            /// </summary>
+            public const string TypeName = "nhk";
+            
+            /// <summary>
+            /// config
+            /// </summary>
+            public const string Config = "http://www.nhk.or.jp/radio/config/config_web.xml";
+        }
+
+        public class ListenRadio
+        {
+            /// <summary>
+            /// 種別
+            /// </summary>
+            public const string TypeName = "lr";
+            
+            /// <summary>
+            /// カテゴリリスト
+            /// </summary>
+            public const string CategoryList = "https://listenradio.jp/service/channelcategory.aspx";
+            
+            /// <summary>
+            /// 放送局一覧
+            /// </summary>
+            public const string StationList = "https://listenradio.jp/service/categorychannel.aspx?categoryid=";
+            
+            /// <summary>
+            /// 番組表
+            /// </summary>
+            public const string Timetable = "https://listenradio.jp/service/schedule.aspx?channelid=";
+        }
     }
 }

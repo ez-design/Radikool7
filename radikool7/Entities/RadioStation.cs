@@ -12,6 +12,10 @@ namespace Radikool7.Entities
         public string AreaName { get; set; }
         public string Type { get; set; }
         public string StationUrl { get; set; }
+        
+        public string MediaUrl { get; set; }
+        
+        public string TimetableUrl { get; set; }
         public int Sequence { get; set; }
     }
 }

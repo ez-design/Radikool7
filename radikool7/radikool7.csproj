@@ -92,6 +92,8 @@
     <Compile Include="Entities\RadikoLoginCheckResult.cs" />
     <Compile Include="Entities\RadioProgram.cs" />
     <Compile Include="Entities\RadioStation.cs" />
+    <Compile Include="Radio\ListenRadio.cs" />
+    <Compile Include="Radio\Nhk.cs" />
     <Compile Include="Radio\Radiko.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
