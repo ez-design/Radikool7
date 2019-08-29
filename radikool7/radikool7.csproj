@@ -88,7 +88,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\Define.cs" />
+    <Compile Include="Classes\Utility.cs" />
     <Compile Include="Entities\RadikoLoginCheckResult.cs" />
+    <Compile Include="Entities\RadioProgram.cs" />
     <Compile Include="Entities\RadioStation.cs" />
     <Compile Include="Radio\Radiko.cs" />
     <Page Include="MainWindow.xaml">

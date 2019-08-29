@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -84,7 +85,7 @@ namespace Radikool7.Radio
 
 
         /// <summary>
-        /// 
+        ///  放送局取得
         /// </summary>
         /// <returns></returns>
         public static async Task<List<RadioStation>> GetStations()
@@ -132,6 +133,7 @@ namespace Radikool7.Radio
                             Name = name,
                             AreaId = areaId,
                             Type = Define.Radiko.TypeName,
+                            StationUrl = url,
                             Sequence = sequence++
                         });
                     }
@@ -145,8 +147,112 @@ namespace Radikool7.Radio
             }
 
             return result;
+        }
 
+        /// <summary>
+        /// 番組情報取得
+        /// </summary>
+        /// <param name="station"></param>
+        /// <returns></returns>
+        public static async Task<List<RadioProgram>> GetPrograms(RadioStation station)
+        {
+            var xml = await HttpClient.GetStringAsync(
+                Define.Radiko.WeeklyTimeTable.Replace("[stationCode]", station.Code));
+
+
+            var doc = XDocument.Parse(xml);
+
+            return doc.Descendants("prog")
+                .Select(prog => new RadioProgram()
+                {
+                    Id = station.Code + prog.Attribute("ft")?.Value + prog.Attribute("to")?.Value,
+                    Start = Utility.Text.StringToDate(prog.Attribute("ft")?.Value),
+                    End = Utility.Text.StringToDate(prog.Attribute("to")?.Value),
+                    Title = prog.Element("title")?.Value.Trim(),
+                    Cast = prog.Element("pfm")?.Value.Trim(),
+                    Description = prog.Element("info")?.Value.Trim(),
+                    StationId = station.Id,
+                    TsNg = prog.Element("ts_in_ng")?.Value.Trim()
+                })
+                .ToList();
 
         }
+
+        /// <summary>
+        /// トークン取得
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<string> GetAuthToken()
+        {
+
+            // auth token取得
+            var request = new HttpRequestMessage(HttpMethod.Get, Define.Radiko.Auth1);
+            request.Headers.Add("pragma", "no-cache");
+            request.Headers.Add("x-radiko-app", "pc_html5");
+            request.Headers.Add("x-radiko-app-version", "0.0.1");
+            request.Headers.Add("x-radiko-device", "pc");
+            request.Headers.Add("x-radiko-user", "dummy_user");
+            
+            var res = await HttpClient.SendAsync(request);
+            var token = res.Headers.GetValues("X-Radiko-AuthToken").FirstOrDefault();
+            int.TryParse(res.Headers.GetValues("X-Radiko-KeyLength").FirstOrDefault(), out var keyLength);
+            int.TryParse(res.Headers.GetValues("X-Radiko-KeyOffset").FirstOrDefault(), out var keyOffset);
+
+            // partial keyの元を取得
+            var js = await HttpClient.GetStringAsync(Define.Radiko.CommonJs);
+
+            var m = Regex.Match(js, @"new RadikoJSPlayer.*{");
+            var key = "";
+            if (m.Success)
+            {
+                key = m.Value.Split(',')[2].Replace("'", "").Trim();
+            }
+
+            var partialKey =
+                Convert.ToBase64String(Encoding.UTF8.GetBytes(key.Substring(keyOffset, keyLength)));
+
+            // auto tokenを有効可
+            request = new HttpRequestMessage(HttpMethod.Get, Define.Radiko.Auth2);
+            request.Headers.Add("x-radiko-authtoken", token);
+            request.Headers.Add("x-radiko-device", "pc");
+            request.Headers.Add("x-radiko-partialkey", partialKey);
+            request.Headers.Add("x-radiko-user", "dummy_user");
+
+            res = await HttpClient.SendAsync(request);
+
+            return token;
+        }
+
+        /// <summary>
+        /// タイムフリーのm3u8取得
+        /// </summary>
+        /// <param name="program"></param>
+        /// <returns></returns>
+        public static async Task<string> GetTimeFreeM3U8(RadioProgram program)
+        {
+            var m3U8 = "";
+            var token = await GetAuthToken();
+            var url = Define.Radiko.TimeFreeM3U8.Replace("[CH]", program.RadioStation.Code)
+                .Replace("[FT]", program.Start.ToString("yyyyMMddHHmmss"))
+                .Replace("[TO]", program.End.ToString("yyyyMMddHHmmss"));
+
+            var request = new HttpRequestMessage(HttpMethod.Post, url);
+            request.Headers.Add("pragma", "no-cache");
+            request.Headers.Add("X-Radiko-AuthToken", token);
+            var res = await HttpClient.SendAsync(request);
+            var text = await res.Content.ReadAsStringAsync();
+
+            foreach (var line in text.Split('\n'))
+            {
+                if (!line.Contains("http")) continue;
+                m3U8 = line;
+                break;
+            }
+            return m3U8;
+
+        }
+
     }
+
+
 }
