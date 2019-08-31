@@ -9,8 +9,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Newtonsoft.Json;
-using Radikool7.Classes;
-using Radikool7.Entities;
+using Radikool7.Class;
+using Radikool7.Entity;
 
 namespace Radikool7.Radio
 {

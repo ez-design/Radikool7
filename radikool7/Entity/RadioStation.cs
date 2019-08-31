@@ -1,4 +1,4 @@
-namespace Radikool7.Entities
+namespace Radikool7.Entity
 {
     public class RadioStation
     {

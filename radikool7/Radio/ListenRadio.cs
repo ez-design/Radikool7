@@ -4,8 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Radikool7.Classes;
-using Radikool7.Entities;
+using Radikool7.Class;
+using Radikool7.Entity;
 
 namespace Radikool7.Radio
 {

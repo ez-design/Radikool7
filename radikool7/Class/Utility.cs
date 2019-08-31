@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace Radikool7.Classes
+namespace Radikool7.Class
 {
     public static class Utility
     {
