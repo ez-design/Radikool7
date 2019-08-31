@@ -4,9 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Radikool7"
+        xmlns:userControls="clr-namespace:Radikool7.UserControls"
+        xmlns:viewModels="clr-namespace:Radikool7.ViewModels"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <TabControl>
+            <TabItem Header="お知らせ"></TabItem>
+            <TabItem Header="予約"></TabItem>
+            <TabItem Header="放送局"></TabItem>
+            <TabItem Header="番組表">
+                <DockPanel>
+                    <userControls:TabTimetable></userControls:TabTimetable>
+                </DockPanel>
+                
+            </TabItem>
+            <TabItem Header="ライブラリ"></TabItem>
+        </TabControl>
     </Grid>
 </Window>

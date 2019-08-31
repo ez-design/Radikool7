@@ -92,9 +92,19 @@
     <Compile Include="Entities\RadikoLoginCheckResult.cs" />
     <Compile Include="Entities\RadioProgram.cs" />
     <Compile Include="Entities\RadioStation.cs" />
-    <Compile Include="Radio\ListenRadio.cs" />
-    <Compile Include="Radio\Nhk.cs" />
-    <Compile Include="Radio\Radiko.cs" />
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\RadioStationModel.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Radios\ListenRadio.cs" />
+    <Compile Include="Radios\Nhk.cs" />
+    <Compile Include="Radios\Radiko.cs" />
+    <Compile Include="UserControls\TabTimetable.xaml.cs">
+      <DependentUpon>TabTimetable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TabTimetableStationList.xaml.cs">
+      <DependentUpon>TabTimetableStationList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -107,6 +117,8 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserControls\TabTimetable.xaml" />
+    <Page Include="UserControls\TabTimetableStationList.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

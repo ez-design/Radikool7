@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using Radikool7.Classes;
 using Radikool7.Entities;
 
-namespace Radikool7.Radio
+namespace Radikool7.Radios
 {
     public static class Radiko
     {

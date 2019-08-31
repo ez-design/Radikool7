@@ -52,9 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include=".Settings\TestSetting.cs" />
-    <Compile Include="Radio\ListenRadio.cs" />
-    <Compile Include="Radio\Nhk.cs" />
-    <Compile Include="Radio\Radiko.cs" />
+    <Compile Include="ModelsTest\RadioStationModelTest.cs" />
+    <Compile Include="RadiosTest\ListenRadioTest.cs" />
+    <Compile Include="RadiosTest\Nhk.cs" />
+    <Compile Include="RadiosTest\Radiko.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
