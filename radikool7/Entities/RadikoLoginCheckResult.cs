@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Radikool7.Entity
+namespace Radikool7.Entities
 {
     public class RadikoLoginCheckResult
     {

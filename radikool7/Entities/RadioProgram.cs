@@ -1,6 +1,6 @@
 using System;
 
-namespace Radikool7.Entity
+namespace Radikool7.Entities
 {
     public class RadioProgram
     {

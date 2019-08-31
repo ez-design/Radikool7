@@ -1,4 +1,4 @@
-namespace Radikool7.Class
+namespace Radikool7.Classes
 {
     public static class Define
     {
