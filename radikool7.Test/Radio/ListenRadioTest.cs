@@ -1,14 +1,15 @@
 using System;
 using System.Linq;
+using Radikool7.Radio;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Radikool7.Test.Radio
 {
-    public class ListenRadio
+    public class ListenRadioTest
     {
         private ITestOutputHelper _output;
-        public ListenRadio(ITestOutputHelper output)
+        public ListenRadioTest(ITestOutputHelper output)
         {
             _output = output;
         }
@@ -16,15 +17,15 @@ namespace Radikool7.Test.Radio
         [Fact]
         public async void GetStationsTest()
         {
-            var stations = await Radikool7.Radio.ListenRadio.GetStations();
+            var stations = await ListenRadio.GetStations();
             Assert.NotEmpty(stations);
         }
 
         [Fact]
         public async void GetProgramTest()
         {
-            var stations = await Radikool7.Radio.ListenRadio.GetStations();
-            var programs = await Radikool7.Radio.ListenRadio.GetPrograms(stations.First());
+            var stations = await ListenRadio.GetStations();
+            var programs = await ListenRadio.GetPrograms(stations.First());
 
             Assert.NotEmpty(programs);
         }

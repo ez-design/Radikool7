@@ -1,15 +1,16 @@
 using System.Linq;
 using System.Runtime.InteropServices;
-using radikool7.Test;
+using Radikool7.Radio;
+using Radikool7.Test.Settings;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Radikool7.Test.Radio
 {
-    public class Radiko
+    public class RadikoTest
     {
         private ITestOutputHelper _output;
-        public Radiko(ITestOutputHelper output)
+        public RadikoTest(ITestOutputHelper output)
         {
             _output = output;
         }
@@ -17,34 +18,34 @@ namespace Radikool7.Test.Radio
         [Fact]
         public async void LoginTest()
         {
-            var result = await Radikool7.Radio.Radiko.Login(TestSetting.RadikoEmail, TestSetting.RadikoPassword);
+            var result = await Radiko.Login(TestSetting.RadikoEmail, TestSetting.RadikoPassword);
             Assert.True(result);
 
-            result = await Radikool7.Radio.Radiko.LoginCheck();
+            result = await Radiko.LoginCheck();
             Assert.True(result);
         }
         
         [Fact]
         public async void LoginCheckTest()
         {
-            var result = await Radikool7.Radio.Radiko.LoginCheck();
+            var result = await Radiko.LoginCheck();
             Assert.False(result);
         }
         
         [Fact]
         public async void GetPrefIdTest()
         {
-            var result = await Radikool7.Radio.Radiko.GetPrefId();
-            Assert.Equal("JP13", result);
+            var result = await Radiko.GetPrefId();
+            Assert.Equal("JP28", result);
         }
         
         [Fact]
         public async void GetStationsTest()
         {
-            var stations = await Radikool7.Radio.Radiko.GetStations();
+            var stations = await Radiko.GetStations();
             
-            await Radikool7.Radio.Radiko.Login(TestSetting.RadikoEmail, TestSetting.RadikoPassword);
-            var allStation = await Radikool7.Radio.Radiko.GetStations();
+            await Radiko.Login(TestSetting.RadikoEmail, TestSetting.RadikoPassword);
+            var allStation = await Radiko.GetStations();
             
             Assert.NotEqual(stations.Count, allStation.Count);
         }
@@ -52,8 +53,8 @@ namespace Radikool7.Test.Radio
         [Fact]
         public async void GetProgram()
         {
-            var stations = await Radikool7.Radio.Radiko.GetStations();
-            var programs = await Radikool7.Radio.Radiko.GetPrograms(stations.First());
+            var stations = await Radiko.GetStations();
+            var programs = await Radiko.GetPrograms(stations.First());
             
             Assert.NotEmpty(programs);
         }
@@ -61,7 +62,7 @@ namespace Radikool7.Test.Radio
         [Fact]
         public async void GetAuthTokenTest()
         {
-            var token = await Radikool7.Radio.Radiko.GetAuthToken();
+            var token = await Radiko.GetAuthToken();
             Assert.NotEqual("", token);
         }
 
@@ -69,10 +70,10 @@ namespace Radikool7.Test.Radio
         public async void GetTimeFree()
         {
            // await Radikool7.Radio.Radiko.Login(TestSetting.RadikoEmail, TestSetting.RadikoPassword);
-            var station = (await Radikool7.Radio.Radiko.GetStations()).First();
-            var program = (await Radikool7.Radio.Radiko.GetPrograms(station)).First();
+            var station = (await Radiko.GetStations()).First();
+            var program = (await Radiko.GetPrograms(station)).First();
             program.RadioStation = station;
-            var m3u8 = await Radikool7.Radio.Radiko.GetTimeFreeM3U8(program);
+            var m3u8 = await Radiko.GetTimeFreeM3U8(program);
             _output.WriteLine(m3u8);
             Assert.NotEqual("", m3u8);
         }
