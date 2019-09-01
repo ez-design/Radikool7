@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Radikool7.Classes;
 using Radikool7.Entities;
+using Radikool7.Radios;
 
 namespace Radikool7.Models
 {
@@ -48,6 +51,33 @@ namespace Radikool7.Models
             orgData = orgData.Where(x => !stationIds.Contains(x.StationId)).ToList();
             var data = orgData.Concat(radioPrograms).ToList();
             await Write(FileName, data);
+        }
+
+        /// <summary>
+        /// 番組表をサーバから取得し、ファイルを更新する
+        /// </summary>
+        /// <param name="radioStations"></param>
+        /// <returns></returns>
+        public async Task<List<RadioProgram>> Refresh(params RadioStation[] radioStations)
+        {
+            var radioPrograms = new List<RadioProgram>();
+            foreach (var radioStation in radioStations)
+            {
+                switch (radioStation.Type)
+                {
+                    case Define.Radiko.TypeName:
+                        radioPrograms.AddRange(await Radiko.GetPrograms(radioStation));
+                        break;
+                    case Define.Nhk.TypeName:
+                        radioPrograms.AddRange(await Nhk.GetPrograms(radioStation, DateTime.Now, DateTime.Now.AddHours(7)));
+                        break;
+                    case Define.ListenRadio.TypeName:
+                        radioPrograms.AddRange(await ListenRadio.GetPrograms(radioStation));
+                        break;
+                }
+            }
+            Update(radioPrograms);
+            return radioPrograms;
         }
 
         /// <summary>

@@ -12,6 +12,7 @@ namespace Radikool7.ViewModels
     {
         public ReactiveCollection<RadioProgram> RadikoPrograms { get; } = new ReactiveCollection<RadioProgram>();
         public ReactiveCommand SetTimetableStationCmd { get; } = new ReactiveCommand();
+        public ReactiveCommand RefreshProgramCmd { get; } = new ReactiveCommand();
 
         private MainModel _model;
         
@@ -19,7 +20,21 @@ namespace Radikool7.ViewModels
         {
             _model = model;
             RadikoPrograms.AddTo(disposable);
+            // コマンド
             SetTimetableStationCmd.Subscribe(SetTimetableStation).AddTo(disposable);
+            RefreshProgramCmd.Subscribe(RefreshProgram).AddTo(disposable);
+        }
+
+        /// <summary>
+        /// 番組データをサーバから取得
+        /// </summary>
+        /// <param name="data"></param>
+        private async void RefreshProgram(object data)
+        {
+            if (data is RadioStation station)
+            {
+                var programs = await _model.RadioProgramModel.Refresh(station);
+            }
         }
         
         /// <summary>

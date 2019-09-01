@@ -14,10 +14,17 @@
             <ItemsControl ItemsSource="{Binding Station.RadikoStations}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button 
-                            Content="{Binding Name}" 
-                            Command="{Binding Path=DataContext.Program.SetTimetableStationCmd, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window} }}"
-                            CommandParameter="{Binding}"></Button>
+                        <StackPanel Orientation="Horizontal">
+                            <Button 
+                                Content="{Binding Name}" 
+                                Command="{Binding Path=DataContext.Program.SetTimetableStationCmd, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window} }}"
+                                CommandParameter="{Binding}"></Button>
+                            <Button 
+                                Content="更新"
+                                Command="{Binding Path=DataContext.Program.RefreshProgramCmd, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window} }}"
+                                CommandParameter="{Binding}"></Button>
+                        </StackPanel>
+                       
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
