@@ -10,16 +10,40 @@
              d:DesignHeight="300" d:DesignWidth="300">
     
     <ScrollViewer>
-        <ItemsControl ItemsSource="{Binding RadikoStations}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button 
-                        Content="{Binding Name}" 
-                        Command="{Binding Path=DataContext.SetTimetableStationCmd, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window} }}"
-                        CommandParameter="{Binding}"></Button>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <StackPanel>
+            <ItemsControl ItemsSource="{Binding Station.RadikoStations}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button 
+                            Content="{Binding Name}" 
+                            Command="{Binding Path=DataContext.Program.SetTimetableStationCmd, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window} }}"
+                            CommandParameter="{Binding}"></Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        
+            <ItemsControl ItemsSource="{Binding Station.NhkStations}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button 
+                            Content="{Binding Name}" 
+                            Command="{Binding Path=DataContext.Program.SetTimetableStationCmd, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window} }}"
+                            CommandParameter="{Binding}"></Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
+            <ItemsControl ItemsSource="{Binding Station.ListenRadioStations}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button 
+                            Content="{Binding Name}" 
+                            Command="{Binding Path=DataContext.Program.SetTimetableStationCmd, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window} }}"
+                            CommandParameter="{Binding}"></Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
     </ScrollViewer>
     
 </UserControl>

@@ -12,16 +12,13 @@ namespace Radikool7.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged, IDisposable
     {
-        public ReactiveCollection<RadioStation> RadikoStations { get; } = new ReactiveCollection<RadioStation>();
-        public ReactiveCollection<RadioProgram> RadikoPrograms { get; } = new ReactiveCollection<RadioProgram>();
-        
-
-        public ReactiveCommand SetTimetableStationCmd { get; } = new ReactiveCommand();
+        public StationViewModel Station { get; } = new StationViewModel();
+        public ProgramViewModel Program { get; } = new ProgramViewModel();
+        public LibraryViewModel Library { get; } = new LibraryViewModel();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
 
-        private MainModel _model;
         private readonly CompositeDisposable _disposable = new CompositeDisposable();
         public MainViewModel()
         {
@@ -32,26 +29,12 @@ namespace Radikool7.ViewModels
         /// </summary>
         public async void Init(MainModel model)
         {
-            _model = model;
-            RadikoStations.AddRangeOnScheduler(await Radiko.GetStations());
-
-            RadikoPrograms.AddTo(_disposable);
-            RadikoStations.AddTo(_disposable);
-
-            SetTimetableStationCmd.Subscribe(SetTimetableStation);
+            Station.Init(model, _disposable);
+            Program.Init(model, _disposable);
+            Library.Init(model, _disposable);
         }
 
-        /// <summary>
-        /// 番組表表示用放送局指定
-        /// </summary>
-        /// <param name="data"></param>
-        private async void SetTimetableStation(object data)
-        {
-            if (data is RadioStation station)
-            {
-                var programs = await _model.RadioProgramModel.Search(new SearchCondition() {StationIds = new List<string>() {station.Id}});
-            }
-        }
+       
 
         public void Dispose()
         {

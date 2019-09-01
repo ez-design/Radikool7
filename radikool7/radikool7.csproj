@@ -106,7 +106,11 @@
     <Compile Include="UserControls\TabTimetableStationList.xaml.cs">
       <DependentUpon>TabTimetableStationList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\IViewModel.cs" />
+    <Compile Include="ViewModels\LibraryViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\ProgramViewModel.cs" />
+    <Compile Include="ViewModels\StationViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
