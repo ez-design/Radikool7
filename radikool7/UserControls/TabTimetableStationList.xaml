@@ -13,7 +13,10 @@
         <ItemsControl ItemsSource="{Binding RadikoStations}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Content="{Binding Name}" Click="ButtonStation_OnClick"></Button>
+                    <Button 
+                        Content="{Binding Name}" 
+                        Command="{Binding Path=DataContext.SetTimetableStationCmd, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window} }}"
+                        CommandParameter="{Binding}"></Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

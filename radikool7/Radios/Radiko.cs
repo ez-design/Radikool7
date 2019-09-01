@@ -156,9 +156,17 @@ namespace Radikool7.Radios
         /// <returns></returns>
         public static async Task<List<RadioProgram>> GetPrograms(RadioStation station)
         {
-            var xml = await HttpClient.GetStringAsync(
-                Define.Radiko.WeeklyTimeTable.Replace("[stationCode]", station.Code));
-
+            var xml = "";
+            var url = Define.Radiko.WeeklyTimeTable.Replace("[stationCode]", station.Code);
+            try
+            {
+                xml = await HttpClient.GetStringAsync(url);
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler?.Invoke(new Exception($"{url}"));
+                return new List<RadioProgram>();
+            }
 
             var doc = XDocument.Parse(xml);
 

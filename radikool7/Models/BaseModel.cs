@@ -1,4 +1,5 @@
 using System.IO;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Radikool7.Models
@@ -11,24 +12,29 @@ namespace Radikool7.Models
         /// <param name="fileName"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        protected static T Read<T>(string fileName)
+        protected static Task<T> Read<T>(string fileName)
         {
-            var res = default(T);
-            if (!File.Exists(fileName))
+            return Task.Factory.StartNew(() =>
             {
-                return res;
-            }
-            var json = File.ReadAllText(fileName);
-            try
-            {
-                res = JsonConvert.DeserializeObject<T>(json);
-            }
-            catch
-            {
-                // ignored
-            }
+                var res = default(T);
+                if (!File.Exists(fileName))
+                {
+                    return res;
+                }
 
-            return res;
+                var json = File.ReadAllText(fileName);
+                try
+                {
+                    res = JsonConvert.DeserializeObject<T>(json);
+                }
+                catch
+                {
+                    // ignored
+                }
+
+                return res;
+            });
+
         }
 
         /// <summary>
@@ -36,17 +42,21 @@ namespace Radikool7.Models
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="data"></param>
-        protected static void Write(string fileName, object data)
+        protected static Task Write(string fileName, object data)
         {
-            try
+            return Task.Factory.StartNew(() =>
             {
-                var json = JsonConvert.SerializeObject(data);
-                File.WriteAllText(fileName, json);
-            }
-            catch
-            {
-                // ignored
-            }
+                try
+                {
+                    var json = JsonConvert.SerializeObject(data);
+                    File.WriteAllText(fileName, json);
+                }
+                catch
+                {
+                    // ignored
+                }
+            });
+
         }
     }
 }

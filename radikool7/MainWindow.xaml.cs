@@ -1,4 +1,5 @@
-﻿using Radikool7.ViewModels;
+﻿using Radikool7.Models;
+using Radikool7.ViewModels;
 
 namespace Radikool7
 {
@@ -10,7 +11,7 @@ namespace Radikool7
         public MainWindow()
         {
             var vModel = new MainViewModel();
-            vModel.Init();
+            vModel.Init(new MainModel());
 
             DataContext = vModel;
             InitializeComponent();

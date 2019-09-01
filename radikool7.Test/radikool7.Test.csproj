@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include=".Settings\TestSetting.cs" />
+    <Compile Include="BaseTest.cs" />
+    <Compile Include="ModelsTest\RadioProgramModelTest.cs" />
     <Compile Include="ModelsTest\RadioStationModelTest.cs" />
     <Compile Include="RadiosTest\ListenRadioTest.cs" />
     <Compile Include="RadiosTest\Nhk.cs" />

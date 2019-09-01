@@ -12,11 +12,11 @@ namespace Radikool7.Models
     {
         public static string FileName { get; set; } = "station.json";
         
-        public async Task<IEnumerable<RadioStation>> Get(string type)
+        public async Task<List<RadioStation>> Get(string type)
         {
-            IEnumerable<RadioStation> res;
-            var radioStations = Read<IEnumerable<RadioStation>>(FileName) ?? new RadioStation[]{};
-            if ((res = radioStations?.Where(x => x.Type == type)).Any())
+            List<RadioStation> res;
+            var radioStations = await Load();
+            if ((res = radioStations.Where(x => x.Type == type).ToList()).Any())
             {
                 return res;
             }
@@ -34,10 +34,19 @@ namespace Radikool7.Models
                     break;
             }
 
-            radioStations = radioStations.Concat(res);
-            Write(FileName, radioStations);
+            radioStations = radioStations.Concat(res).ToList();
+            await Write(FileName, radioStations);
 
             return res;
+        }
+        
+        /// <summary>
+        /// ファイル読み込み
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<RadioStation>> Load()
+        {
+            return await Read<List<RadioStation>>(FileName) ?? new List<RadioStation>();
         }
     }
 }

@@ -92,9 +92,11 @@
     <Compile Include="Entities\RadikoLoginCheckResult.cs" />
     <Compile Include="Entities\RadioProgram.cs" />
     <Compile Include="Entities\RadioStation.cs" />
+    <Compile Include="Entities\SearchCondition.cs" />
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\MainModel.cs" />
+    <Compile Include="Models\RadioProgramModel.cs" />
     <Compile Include="Models\RadioStationModel.cs" />
-    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Radios\ListenRadio.cs" />
     <Compile Include="Radios\Nhk.cs" />
     <Compile Include="Radios\Radiko.cs" />

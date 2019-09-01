@@ -1,3 +1,6 @@
+using System;
+using System.Diagnostics;
+using System.IO;
 using Radikool7.Classes;
 using Radikool7.Models;
 using Xunit;
@@ -5,26 +8,40 @@ using Xunit.Abstractions;
 
 namespace radikool7.Test.ModelsTest
 {
-    public class RadioStationModelTest
+    public class RadioStationModelTest : BaseTest
     {
-        private ITestOutputHelper _output;
-        public RadioStationModelTest(ITestOutputHelper output)
+        private readonly MainModel _model = new MainModel();
+        private readonly string _fileName;
+        
+        public RadioStationModelTest(ITestOutputHelper output) : base(output)
         {
-            _output = output;
+            _fileName = $"{Guid.NewGuid():N}.json";
+            RadioStationModel.FileName = _fileName;
         }
-
+        
         [Fact]
-        public async void GetTest()
+        public void GetTest()
         {
-            var model = new RadioStationModel();
-            var radiko = await model.Get(Define.Radiko.TypeName);
-            Assert.NotEmpty(radiko);
+            Execute("GetTest", async () =>
+            {
+                var radiko = await _model.RadioStationModel.Get(Define.Radiko.TypeName);
+                Assert.NotEmpty(radiko);
             
-            var nhk = await model.Get(Define.Nhk.TypeName);
-            Assert.NotEmpty(nhk);
+                var nhk = await _model.RadioStationModel.Get(Define.Nhk.TypeName);
+                Assert.NotEmpty(nhk);
             
-            var listenRadio = await model.Get(Define.ListenRadio.TypeName);
-            Assert.NotEmpty(listenRadio);
+                var listenRadio = await _model.RadioStationModel.Get(Define.ListenRadio.TypeName);
+                Assert.NotEmpty(listenRadio);
+
+                var sw = new Stopwatch();
+                sw.Start();
+                var stations = await _model.RadioStationModel.Load();
+                sw.Stop();
+                Output.WriteLine($"{stations.Count}件: {sw.Elapsed}");
+                
+                File.Delete(_fileName);
+            });
+            
         }
     }
 }
